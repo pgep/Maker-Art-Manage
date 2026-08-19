@@ -1,7 +1,7 @@
 import React from 'react';
 import { Loader2 } from 'lucide-react';
 
-export type ButtonVariant = 'primary' | 'secondary' | 'danger' | 'outline' | 'ghost';
+export type ButtonVariant = 'primary' | 'secondary' | 'danger' | 'warning' | 'outline' | 'ghost';
 export type ButtonSize = 'sm' | 'md' | 'lg';
 
 export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
@@ -10,6 +10,7 @@ export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElemen
   isLoading?: boolean;
   leftIcon?: React.ReactNode;
   rightIcon?: React.ReactNode;
+  icon?: React.ReactNode;
 }
 
 export const Button: React.FC<ButtonProps> = ({
@@ -19,6 +20,7 @@ export const Button: React.FC<ButtonProps> = ({
   isLoading = false,
   leftIcon,
   rightIcon,
+  icon,
   className = '',
   disabled,
   ...props
@@ -39,24 +41,28 @@ export const Button: React.FC<ButtonProps> = ({
       'bg-white hover:bg-slate-50 text-slate-700 border border-slate-300 shadow-2xs hover:border-slate-400 focus:ring-slate-400',
     danger:
       'bg-rose-600 hover:bg-rose-700 text-white shadow-sm hover:shadow shadow-rose-600/20 focus:ring-rose-500 border border-transparent',
+    warning:
+      'bg-amber-600 hover:bg-amber-700 text-white shadow-sm hover:shadow shadow-amber-600/20 focus:ring-amber-500 border border-transparent',
     outline:
       'bg-transparent hover:bg-indigo-50 text-indigo-700 border border-indigo-300 focus:ring-indigo-500',
     ghost:
       'bg-transparent hover:bg-slate-100 text-slate-700 focus:ring-slate-300 border border-transparent',
   };
 
+  const effectiveLeftIcon = leftIcon || icon;
+
   return (
     <button
-      className={`${baseStyles} ${sizeStyles[size]} ${variantStyles[variant]} ${className}`}
+      className={`${baseStyles} ${sizeStyles[size]} ${variantStyles[variant] || variantStyles.primary} ${className}`}
       disabled={disabled || isLoading}
       {...props}
     >
       {isLoading ? (
         <Loader2 className="w-4 h-4 animate-spin text-current" />
       ) : (
-        leftIcon && <span className="shrink-0">{leftIcon}</span>
+        effectiveLeftIcon && <span className="shrink-0">{effectiveLeftIcon}</span>
       )}
-      <span>{children}</span>
+      {children && <span>{children}</span>}
       {!isLoading && rightIcon && <span className="shrink-0">{rightIcon}</span>}
     </button>
   );

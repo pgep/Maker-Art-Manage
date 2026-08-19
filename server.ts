@@ -2,7 +2,8 @@ import express from 'express';
 import path from 'path';
 import { createServer as createViteServer } from 'vite';
 import { unidadeMedidaRouter } from './src/server/routes/unidadeMedidaRoutes.ts';
-import { ensureInitialSeeds } from './src/server/services/unidadeMedidaService.ts';
+import { tipoProdutoRouter } from './src/server/routes/tipoProdutoRoutes.ts';
+import { tipoInsumoRouter } from './src/server/routes/tipoInsumoRoutes.ts';
 
 async function startServer() {
   const app = express();
@@ -20,14 +21,15 @@ async function startServer() {
     });
   });
 
-  // Unidades de Medida REST endpoints (support both /api/unidades-medida and /unidades-medida)
+  // REST endpoints
   app.use('/api/unidades-medida', unidadeMedidaRouter);
   app.use('/unidades-medida', unidadeMedidaRouter);
 
-  // Lazy seed verification (does not block server startup)
-  ensureInitialSeeds().catch((err) => {
-    console.error('Initial seeding notice:', err?.message || err);
-  });
+  app.use('/api/tipos-produto', tipoProdutoRouter);
+  app.use('/tipos-produto', tipoProdutoRouter);
+
+  app.use('/api/tipos-insumo', tipoInsumoRouter);
+  app.use('/tipos-insumo', tipoInsumoRouter);
 
   // Vite middleware for development vs static build in production
   if (process.env.NODE_ENV !== 'production') {

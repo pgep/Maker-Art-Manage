@@ -12,11 +12,13 @@ export interface SelectProps extends React.SelectHTMLAttributes<HTMLSelectElemen
   options: SelectOption[];
   error?: string;
   helperText?: string;
+  helpText?: string;
 }
 
 export const Select = React.forwardRef<HTMLSelectElement, SelectProps>(
-  ({ label, options, error, helperText, className = '', id, required, ...props }, ref) => {
+  ({ label, options, error, helperText, helpText, className = '', id, required, ...props }, ref) => {
     const selectId = id || (label ? label.toLowerCase().replace(/\s+/g, '-') : undefined);
+    const resolvedHelpText = helperText || helpText;
 
     return (
       <div className="w-full space-y-1.5 text-left">
@@ -52,7 +54,7 @@ export const Select = React.forwardRef<HTMLSelectElement, SelectProps>(
         </div>
 
         {error && <p className="text-xs text-rose-600 font-medium">{error}</p>}
-        {!error && helperText && <p className="text-xs text-slate-500">{helperText}</p>}
+        {!error && resolvedHelpText && <p className="text-xs text-slate-500">{resolvedHelpText}</p>}
       </div>
     );
   }

@@ -1,6 +1,6 @@
 import { eq, desc, asc, ilike, and, sql, or } from 'drizzle-orm';
 import { db } from '../../db/index.ts';
-import { unidadesMedida, type UnidadeMedida, type NovaUnidadeMedida } from '../../db/schema.ts';
+import { unidadesMedida, type UnidadeMedida } from '../../db/schema.ts';
 
 export const ALLOWED_TIPOS = ['Volume', 'Comprimento', 'Massa', 'Unidade'] as const;
 export type TipoUnidade = typeof ALLOWED_TIPOS[number];
@@ -228,24 +228,3 @@ export async function deleteUnidadeMedida(id: number): Promise<boolean> {
   }
 }
 
-export async function ensureInitialSeeds(): Promise<void> {
-  try {
-    const count = await db.select({ count: sql<number>`count(*)::int` }).from(unidadesMedida);
-    if (count[0]?.count === 0) {
-      const initialUnits: NovaUnidadeMedida[] = [
-        { nome: 'Grama (g)', tipo: 'Massa', fatorConversao: 1, createdAt: new Date(), updatedAt: new Date() },
-        { nome: 'Quilograma (kg)', tipo: 'Massa', fatorConversao: 1000, createdAt: new Date(), updatedAt: new Date() },
-        { nome: 'Mililitro (ml)', tipo: 'Volume', fatorConversao: 1, createdAt: new Date(), updatedAt: new Date() },
-        { nome: 'Litro (L)', tipo: 'Volume', fatorConversao: 1000, createdAt: new Date(), updatedAt: new Date() },
-        { nome: 'Centímetro (cm)', tipo: 'Comprimento', fatorConversao: 0.01, createdAt: new Date(), updatedAt: new Date() },
-        { nome: 'Metro (m)', tipo: 'Comprimento', fatorConversao: 1, createdAt: new Date(), updatedAt: new Date() },
-        { nome: 'Unidade (un)', tipo: 'Unidade', fatorConversao: 1, createdAt: new Date(), updatedAt: new Date() },
-        { nome: 'Pacote / Caixa (cx)', tipo: 'Unidade', fatorConversao: 1, createdAt: new Date(), updatedAt: new Date() },
-      ];
-      await db.insert(unidadesMedida).values(initialUnits);
-      console.log('Default measurement units seeded successfully.');
-    }
-  } catch (err) {
-    console.warn('Could not check or run initial seeds (lazy start):', err);
-  }
-}

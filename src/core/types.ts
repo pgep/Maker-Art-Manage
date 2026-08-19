@@ -15,6 +15,32 @@ export interface UnidadeMedidaFormData {
   fatorConversao: number | string;
 }
 
+export interface TipoProduto {
+  id: number;
+  nome: string;
+  ativo: boolean;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface TipoProdutoFormData {
+  nome: string;
+  ativo?: boolean;
+}
+
+export interface TipoInsumo {
+  id: number;
+  nome: string;
+  ativo: boolean;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface TipoInsumoFormData {
+  nome: string;
+  ativo?: boolean;
+}
+
 export interface PaginatedResponse<T> {
   data: T[];
   total: number;

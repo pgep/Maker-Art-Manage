@@ -1,6 +1,6 @@
 {
   "name": "Maker Art Manage",
-  "description": "Sistema de gestão modular para artesãos de diferentes segmentos - Módulo de Unidades de Medida.",
+  "description": "Sistema de gestão modular para artesãos de diferentes segmentos com cadastros de Unidades de Medida, Tipos de Produto e Tipos de Insumo.",
   "requestFramePermissions": [],
   "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
 }
