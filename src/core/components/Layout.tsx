@@ -5,6 +5,9 @@ import {
   Scale,
   Tag,
   Boxes,
+  Package2,
+  Percent,
+  Layers,
   FolderTree,
   ChevronDown,
   Hammer,
@@ -22,6 +25,12 @@ export const Layout: React.FC<LayoutProps> = ({ children, currentView, onNavigat
 
   const getViewTitle = () => {
     switch (currentView) {
+      case 'produtos':
+        return 'Cadastros • Produto';
+      case 'markups':
+        return 'Cadastros • Markup';
+      case 'insumos':
+        return 'Cadastros • Insumo';
       case 'tipos-insumo':
         return 'Cadastros • Tipo de Insumo';
       case 'tipos-produto':
@@ -101,7 +110,7 @@ export const Layout: React.FC<LayoutProps> = ({ children, currentView, onNavigat
               <button
                 type="button"
                 onClick={() => setIsCadastrosExpanded(!isCadastrosExpanded)}
-                className="w-full flex items-center justify-between px-2.5 py-1.5 text-xs font-semibold text-slate-500 uppercase tracking-wider hover:text-slate-700 transition-colors"
+                className="w-full flex items-center justify-between px-2.5 py-1.5 text-xs font-semibold text-slate-500 uppercase tracking-wider hover:text-slate-700 transition-colors cursor-pointer"
               >
                 <div className="flex items-center gap-1.5">
                   <FolderTree className="w-3.5 h-3.5" />
@@ -181,6 +190,72 @@ export const Layout: React.FC<LayoutProps> = ({ children, currentView, onNavigat
                       <span>Tipo de Insumo</span>
                     </div>
                   </button>
+
+                  {/* Insumo */}
+                  <button
+                    onClick={() => {
+                      onNavigate('insumos');
+                      setIsSidebarOpen(false);
+                    }}
+                    className={`w-full flex items-center justify-between px-3 py-2 rounded-lg text-xs font-medium transition-colors cursor-pointer ${
+                      currentView === 'insumos'
+                        ? 'bg-indigo-50 text-indigo-700 font-semibold border border-indigo-100 shadow-2xs'
+                        : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900'
+                    }`}
+                  >
+                    <div className="flex items-center gap-2.5">
+                      <Package2
+                        className={`w-4 h-4 ${
+                          currentView === 'insumos' ? 'text-indigo-600' : 'text-slate-400'
+                        }`}
+                      />
+                      <span>Insumo</span>
+                    </div>
+                  </button>
+
+                  {/* Markup */}
+                  <button
+                    onClick={() => {
+                      onNavigate('markups');
+                      setIsSidebarOpen(false);
+                    }}
+                    className={`w-full flex items-center justify-between px-3 py-2 rounded-lg text-xs font-medium transition-colors cursor-pointer ${
+                      currentView === 'markups'
+                        ? 'bg-indigo-50 text-indigo-700 font-semibold border border-indigo-100 shadow-2xs'
+                        : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900'
+                    }`}
+                  >
+                    <div className="flex items-center gap-2.5">
+                      <Percent
+                        className={`w-4 h-4 ${
+                          currentView === 'markups' ? 'text-indigo-600' : 'text-slate-400'
+                        }`}
+                      />
+                      <span>Markup</span>
+                    </div>
+                  </button>
+
+                  {/* Produto */}
+                  <button
+                    onClick={() => {
+                      onNavigate('produtos');
+                      setIsSidebarOpen(false);
+                    }}
+                    className={`w-full flex items-center justify-between px-3 py-2 rounded-lg text-xs font-medium transition-colors cursor-pointer ${
+                      currentView === 'produtos'
+                        ? 'bg-indigo-50 text-indigo-700 font-semibold border border-indigo-100 shadow-2xs'
+                        : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900'
+                    }`}
+                  >
+                    <div className="flex items-center gap-2.5">
+                      <Layers
+                        className={`w-4 h-4 ${
+                          currentView === 'produtos' ? 'text-indigo-600' : 'text-slate-400'
+                        }`}
+                      />
+                      <span>Produto</span>
+                    </div>
+                  </button>
                 </div>
               )}
             </div>
@@ -203,5 +278,6 @@ export const Layout: React.FC<LayoutProps> = ({ children, currentView, onNavigat
     </div>
   );
 };
+
 
 

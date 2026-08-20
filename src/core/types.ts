@@ -41,6 +41,103 @@ export interface TipoInsumoFormData {
   ativo?: boolean;
 }
 
+export interface Insumo {
+  id: number;
+  nome: string;
+  tipoInsumoId: number;
+  unidadeMedidaId: number;
+  quantidadeCompra: number;
+  valorCompra: number;
+  quantidadeBase: number;
+  custoUnitarioBase: number;
+  quantidadeEstoque: number;
+  estoqueMinimo: number;
+  ativo: boolean;
+  createdAt: string;
+  updatedAt: string;
+  // Relational details for display and calculations
+  tipoInsumoNome?: string;
+  unidadeMedidaNome?: string;
+  unidadeMedidaTipo?: TipoUnidade;
+  fatorConversao?: number;
+}
+
+export interface InsumoFormData {
+  nome: string;
+  tipoInsumoId: number | string;
+  unidadeMedidaId: number | string;
+  quantidadeCompra: number | string;
+  valorCompra: number | string;
+  estoqueMinimo: number | string;
+  ativo?: boolean;
+}
+
+export interface Markup {
+  id: number;
+  nome: string;
+  fator: number | string;
+  ativo: boolean;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface MarkupFormData {
+  nome: string;
+  fator: number | string;
+  ativo?: boolean;
+}
+
+export interface ProdutoInsumoDetail {
+  id: number;
+  produtoId: number;
+  insumoId: number;
+  quantidade: number;
+  custoUnitarioBase: number;
+  custoComponente: number;
+  insumoNome: string;
+  insumoAtivo: boolean;
+  unidadeMedidaNome: string;
+  unidadeMedidaTipo: string;
+  fatorConversao: number;
+}
+
+export interface Produto {
+  id: number;
+  nome: string;
+  descricao?: string | null;
+  tipoProdutoId: number;
+  markupId: number;
+  custoTotal: number;
+  precoSugerido: number;
+  precoVenda: number;
+  ativo: boolean;
+  createdAt: string;
+  updatedAt: string;
+  tipoProdutoNome?: string;
+  markupNome?: string;
+  markupFator?: number;
+  totalItensComposicao?: number;
+}
+
+export interface ProdutoDetail extends Produto {
+  itensComposicao: ProdutoInsumoDetail[];
+}
+
+export interface ProdutoInsumoInput {
+  insumoId: number | string;
+  quantidade: number | string;
+}
+
+export interface ProdutoFormData {
+  nome: string;
+  descricao?: string;
+  tipoProdutoId: number | string;
+  markupId: number | string;
+  precoVenda: number | string;
+  ativo?: boolean;
+  itensComposicao: ProdutoInsumoInput[];
+}
+
 export interface PaginatedResponse<T> {
   data: T[];
   total: number;

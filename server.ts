@@ -4,6 +4,9 @@ import { createServer as createViteServer } from 'vite';
 import { unidadeMedidaRouter } from './src/server/routes/unidadeMedidaRoutes.ts';
 import { tipoProdutoRouter } from './src/server/routes/tipoProdutoRoutes.ts';
 import { tipoInsumoRouter } from './src/server/routes/tipoInsumoRoutes.ts';
+import { insumoRouter } from './src/server/routes/insumoRoutes.ts';
+import { markupRouter } from './src/server/routes/markupRoutes.ts';
+import { produtoRouter } from './src/server/routes/produtoRoutes.ts';
 
 async function startServer() {
   const app = express();
@@ -30,6 +33,15 @@ async function startServer() {
 
   app.use('/api/tipos-insumo', tipoInsumoRouter);
   app.use('/tipos-insumo', tipoInsumoRouter);
+
+  app.use('/api/insumos', insumoRouter);
+  app.use('/insumos', insumoRouter);
+
+  app.use('/api/markups', markupRouter);
+  app.use('/markups', markupRouter);
+
+  app.use('/api/produtos', produtoRouter);
+  app.use('/produtos', produtoRouter);
 
   // Vite middleware for development vs static build in production
   if (process.env.NODE_ENV !== 'production') {
